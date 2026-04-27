@@ -2,52 +2,122 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>SMK YASIHA GUBUG
-  Pengumuman Kelulusan Tahun Pelajaran 2025/2026</title>
+  <title>Pengumuman Kelulusan - SMK Yasiha Gubug</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    :root {
+      --primary-color: #d32f2f; /* Merah sesuai identitas sekolah */
+      --secondary-color: #2e7d32; /* Hijau sesuai logo */
+      --accent-color: #ffeb3b; /* Kuning cerah untuk aksen */
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      padding: 40px;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     .box {
       background: white;
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      padding: 40px 30px;
+      border-radius: 20px;
+      max-width: 450px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      border-top: 8px solid var(--primary-color);
     }
 
-    /* Style untuk logo agar ukurannya proporsional */
     .logo {
-      width: 100px;
+      width: 120px;
       height: auto;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
     }
 
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    h2 {
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 1.4em;
+    }
+
+    .info-text {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    input {
+      padding: 15px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
     }
 
     button {
-      background-color: #4facfe;
+      padding: 15px;
+      margin: 15px 0;
+      width: 100%;
+      background: var(--primary-color);
       color: white;
       border: none;
-      cursor: pointer;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+      box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
     }
 
     button:hover {
-      background-color: #00f2fe;
+      background: #b71c1c;
+      transform: translateY(-2px);
+    }
+
+    #hasil {
+      margin-top: 20px;
+      font-weight: bold;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .footer-info {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      font-size: 0.85em;
+      color: #777;
+    }
+
+    .contact-person {
+      color: var(--primary-color);
+      font-weight: bold;
     }
   </style>
 </head>
@@ -56,13 +126,23 @@
 <div class="box">
   <img src="smk-yasiha-gubug.png" alt="Logo SMK Yasiha Gubug" class="logo">
   
+  <h2>SMK YASIHA GUBUG</h2>
   <h3>PENGUMUMAN KELULUSAN</h3>
 
-  <input type="text" id="nis" placeholder="Masukkan NIS">
-  <br>
-  <button onclick="cek()">Cek</button>
+  <p class="info-text">
+    Silakan masukkan Nomor Induk Siswa (NIS) Anda untuk melihat status kelulusan.
+  </p>
+
+  <input type="text" id="nis" placeholder="Masukkan NIS Anda...">
+  <button onclick="cek()">Cek Status Kelulusan</button>
 
   <div id="hasil"></div>
+
+  <div class="footer-info">
+    <p><strong>Kompetensi Keahlian:</strong><br>
+    Arsitek, Busana, Otomasi Industri, Kendaraan Ringan, Sepeda Motor, Alat Berat</p>
+    <p>Hubungi Kami: <span class="contact-person">0858-7775-5164 (Abdillah Abas)</span></p>
+  </div>
 </div>
 
 <script>
@@ -71,28 +151,35 @@ function cek() {
   const hasil = document.getElementById("hasil");
 
   if (!nis) {
-    hasil.innerHTML = "Masukkan NIS!";
+    hasil.style.color = "orange";
+    hasil.innerHTML = "Mohon masukkan NIS terlebih dahulu!";
     return;
   }
 
   const url = `pdf/${nis}.pdf`;
 
-  // cek apakah file ada
   fetch(url)
     .then(res => {
       if (res.ok) {
+        hasil.style.backgroundColor = "#e8f5e9";
+        hasil.style.color = "#2e7d32";
         hasil.innerHTML = `
-          <p>Data ditemukan</p>
-          <a href="${url}" target="_blank">
-            <button>Lihat / Download PDF</button>
+          <p>Selamat! Data ditemukan.</p>
+          <a href="${url}" target="_blank" style="text-decoration: none;">
+            <button style="background: #2e7d32; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);">
+              Lihat / Download SKL (PDF)
+            </button>
           </a>
         `;
       } else {
-        hasil.innerHTML = "<p style='color:red;'>Data tidak ditemukan</p>";
+        hasil.style.backgroundColor = "#ffebee";
+        hasil.style.color = "#c62828";
+        hasil.innerHTML = "Maaf, data tidak ditemukan. Pastikan NIS benar.";
       }
     })
     .catch(() => {
-      hasil.innerHTML = "<p style='color:red;'>Terjadi kesalahan</p>";
+      hasil.style.color = "red";
+      hasil.innerHTML = "Terjadi kesalahan sistem.";
     });
 }
 </script>
