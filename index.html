@@ -7,7 +7,7 @@
 
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
       background: linear-gradient(to right, #4facfe, #00f2fe);
       padding: 40px;
@@ -22,16 +22,39 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
+    /* Style untuk logo agar ukurannya proporsional */
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+
     input, button {
       padding: 10px;
       margin: 10px;
       width: 80%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4facfe;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00f2fe;
     }
   </style>
 </head>
 <body>
 
 <div class="box">
+  <img src="smk-yasiha-gubug.png" alt="Logo SMK Yasiha Gubug" class="logo">
+  
   <h3>PENGUMUMAN KELULUSAN</h3>
 
   <input type="text" id="nis" placeholder="Masukkan NIS">
