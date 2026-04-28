@@ -124,8 +124,8 @@
   <h2>SMK YASIHA GUBUG</h2>
   <h3>Pengumuman Kelulusan Tahun Pelajaran 2025/2026</h3>
 
-  <p>Masukkan NIS Anda:</p>
-  <input type="text" id="nis" placeholder="Nomor Induk Siswa">
+  <p>Masukkan NISN Anda:</p>
+  <input type="text" id="nisn" placeholder="Nomor Induk Siswa Nasional">
   <button onclick="cek()">LIHAT HASIL</button>
 
   <div id="hasil"></div>
@@ -138,18 +138,18 @@
 
 <script>
 function cek() {
-  const nis = document.getElementById("nis").value.trim();
+  const nisn = document.getElementById("nisn").value.trim();
   const hasil = document.getElementById("hasil");
-  if (!nis) {
-    hasil.innerHTML = "<span style='color:orange;'>Isi NIS dahulu!</span>";
+  if (!nisn) {
+    hasil.innerHTML = "<span style='color:orange;'>Isi NISN dahulu!</span>";
     return;
   }
-  const url = `pdf/${nis}.pdf`;
+  const url = `pdf/${nisn}.pdf`;
   fetch(url).then(res => {
     if (res.ok) {
       hasil.innerHTML = `<a href="${url}" target="_blank"><button style="background:#2e7d32">DOWNLOAD SKL (PDF)</button></a>`;
     } else {
-      hasil.innerHTML = "<span style='color:red;'>NIS tidak ditemukan</span>";
+      hasil.innerHTML = "<span style='color:red;'>NISN tidak ditemukan</span>";
     }
   }).catch(() => {
     hasil.innerHTML = "Terjadi kesalahan";
