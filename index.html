@@ -8,7 +8,7 @@
   <style>
     :root {
       --primary-color: #d32f2f;
-      --overlay-color: rgba(255, 255, 255, 0.85);
+      --overlay-color: rgba(255, 255, 255, 0.8); /* Lebih transparan agar bg menyatu */
     }
 
     body {
@@ -20,7 +20,6 @@
       align-items: center;
       justify-content: center;
       
-      /* Background Image */
       background-image: url('spmb-baru.jpg');
       background-size: cover;
       background-position: center;
@@ -28,7 +27,6 @@
       background-attachment: fixed;
     }
 
-    /* Overlay agar background lebih soft */
     body::before {
       content: "";
       position: absolute;
@@ -36,61 +34,56 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.2); /* Gelap tipis agar background tetap cerah */
       z-index: -1;
     }
 
     .box {
       background: var(--overlay-color);
-      padding: 25px;
+      padding: 20px 25px; /* Padding diperkecil */
       border-radius: 15px;
-      max-width: 320px; /* Ukuran diperkecil agar bg luas */
+      max-width: 320px; /* Ukuran kotak diperkecil dari 420px ke 320px */
       width: 85%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       border-top: 6px solid var(--primary-color);
       position: relative;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px); /* Blur lebih kuat untuk estetika modern */
       text-align: center;
     }
 
     .logo-img {
-      width: 80px;
+      width: 70px; /* Logo diperkecil */
       margin-bottom: 10px;
     }
 
     h2 {
       margin: 0;
       color: #333;
-      font-size: 1.2em;
+      font-size: 1.1em; /* Ukuran teks diperkecil */
+      letter-spacing: 0.5px;
     }
 
     h3 {
       color: var(--primary-color);
       margin: 5px 0 15px 0;
       font-size: 1em;
-    }
-
-    #timer {
-      font-size: 1.6em;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin: 15px 0;
-      font-family: monospace;
+      text-transform: uppercase;
     }
 
     p {
-      font-size: 0.9em;
+      font-size: 0.85em;
       color: #444;
+      margin-bottom: 10px;
     }
 
     input {
-      padding: 12px;
-      margin: 10px 0;
+      padding: 10px;
+      margin: 8px 0;
       width: 100%;
       box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     button {
@@ -101,6 +94,7 @@
       border: none;
       border-radius: 8px;
       font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -115,8 +109,8 @@
     }
 
     .footer-text {
-      margin-top: 20px;
-      font-size: 0.75em;
+      margin-top: 15px;
+      font-size: 0.7em;
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.1);
       padding-top: 10px;
@@ -128,77 +122,39 @@
 <div class="box">
   <img src="smk-yasiha-gubug.png" alt="Logo" class="logo-img">
   <h2>SMK YASIHA GUBUG</h2>
+  <h3>Pengumuman Kelulusan Tahun Pelajaran 2025/2026</h3>
 
-  <div id="countdown-section">
-    <h3>PENGUMUMAN DIBUKA:</h3>
-    <div id="timer">00:00:00:00</div>
-    <p>Silakan tunggu waktu pembukaan.</p>
-  </div>
-
-  <div id="form-section" style="display: none;">
-    <h3>CEK KELULUSAN</h3>
-    <p>Masukkan NISN Anda:</p>
-    <input type="text" id="nisn" placeholder="Nomor Induk Siswa Nasional">
-    <button onclick="cek()">LIHAT HASIL</button>
-  </div>
+  <p>Masukkan NISN Anda:</p>
+  <input type="text" id="nisn" placeholder="Nomor Induk Siswa Nasional">
+  <button onclick="cek()">LIHAT HASIL</button>
 
   <div id="hasil"></div>
 
   <div class="footer-text">
     <strong>PPDB SMK YASIHA</strong> sedang dibuka!<br>
-    Hubungi: 0858-7775-5164
+    Info: 0858-7775-5164
   </div>
 </div>
 
 <script>
-  // 1. PENGATURAN WAKTU BUKA (Tahun, Bulan-1, Tanggal, Jam, Menit, Detik)
-  // Contoh di bawah: 5 Mei 2026 pukul 10:00 pagi
-  const waktuBuka = new Date(2026, 3, 29, 9, 35, 0).getTime();
-
-  const x = setInterval(function() {
-    const sekarang = new Date().getTime();
-    const selisih = waktuBuka - sekarang;
-
-    const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
-    const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-    const detik = Math.floor((selisih % (1000 * 60)) / 1000);
-
-    document.getElementById("timer").innerHTML = 
-      hari + "h " + jam + "j " + menit + "m " + detik + "s";
-
-    // Jika waktu habis
-    if (selisih < 0) {
-      clearInterval(x);
-      document.getElementById("countdown-section").style.display = "none";
-      document.getElementById("form-section").style.display = "block";
-    }
-  }, 1000);
-
-  // 2. FUNGSI CEK NISN
-  function cek() {
-    const nisn = document.getElementById("nisn").value.trim();
-    const hasil = document.getElementById("hasil");
-    if (!nisn) {
-      hasil.innerHTML = "<span style='color:orange;'>Isi NISN dahulu!</span>";
-      return;
-    }
-    
-    const url = `pdf/${nisn}.pdf`;
-    fetch(url).then(res => {
-      if (res.ok) {
-        hasil.innerHTML = `
-          <p style="color:green;">Data ditemukan!</p>
-          <a href="${url}" target="_blank">
-            <button style="background:#2e7d32">DOWNLOAD SKL (PDF)</button>
-          </a>`;
-      } else {
-        hasil.innerHTML = "<span style='color:red;'>NISN tidak ditemukan</span>";
-      }
-    }).catch(() => {
-      hasil.innerHTML = "Terjadi kesalahan sistem";
-    });
+function cek() {
+  const nisn = document.getElementById("nisn").value.trim();
+  const hasil = document.getElementById("hasil");
+  if (!nisn) {
+    hasil.innerHTML = "<span style='color:orange;'>Isi NISN dahulu!</span>";
+    return;
   }
+  const url = `pdfok/${nisn}.pdf`;
+  fetch(url).then(res => {
+    if (res.ok) {
+      hasil.innerHTML = `<a href="${url}" target="_blank"><button style="background:#2e7d32">DOWNLOAD SKL (PDF)</button></a>`;
+    } else {
+      hasil.innerHTML = "<span style='color:red;'>NISN tidak ditemukan</span>";
+    }
+  }).catch(() => {
+    hasil.innerHTML = "Terjadi kesalahan";
+  });
+}
 </script>
 
 </body>
